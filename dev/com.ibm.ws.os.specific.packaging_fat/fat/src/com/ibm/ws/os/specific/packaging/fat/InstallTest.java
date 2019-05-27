@@ -45,7 +45,21 @@ public class InstallTest extends InstallUtilityToolTest{
         String[] param1s = { "install", "-y", "./openliberty_19.0.0.1-1ubuntu1_all.deb" };
         ProgramOutput po = runCommand(METHOD_NAME, "apt-get", param1s);
         assertEquals("Expected exit code", 0, po.getReturnCode());
+        exiting(c, METHOD_NAME);
+    }
+
+    @Test
+    public void testVerifyDebInstall() throws Exception {
+       
+        String METHOD_NAME = "testVerifyDebInstall";
+        entering(c, METHOD_NAME);
+
+        String[] param1s = { "-s", "openliberty" };
+        ProgramOutput po = runCommand(METHOD_NAME, "dpkg", param1s);
+        assertEquals("Expected exit code", 0, po.getReturnCode());
         String output = po.getStdout();
+        assertTrue("Should contain installed status",
+                   output.indexOf("Status: install ok installed") >= 0);
         exiting(c, METHOD_NAME);
     }
 
