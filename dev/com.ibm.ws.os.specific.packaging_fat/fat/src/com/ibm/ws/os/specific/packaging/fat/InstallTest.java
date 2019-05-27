@@ -42,7 +42,7 @@ public class InstallTest extends InstallUtilityToolTest{
         String METHOD_NAME = "testInstallDeb";
         entering(c, METHOD_NAME);
 
-        String[] param1s = { "install", "./openliberty_19.0.0.1-1ubuntu1_all.deb" };
+        String[] param1s = { "install", "-y", "./openliberty_19.0.0.1-1ubuntu1_all.deb" };
         ProgramOutput po = runCommand(METHOD_NAME, "apt-get", param1s);
         assertEquals("Expected exit code", 0, po.getReturnCode());
         String output = po.getStdout();
