@@ -63,6 +63,38 @@ public class InstallTest extends InstallUtilityToolTest{
         exiting(c, METHOD_NAME);
     }
 
+    @Test
+    public void testServerStartStop() throws Exception {
+       
+        String METHOD_NAME = "testServerStartStop";
+        entering(c, METHOD_NAME);
+
+        String[] param1s = { "start", "openliberty@defaultServer.service" };
+        ProgramOutput po1 = runCommand(METHOD_NAME, "systemctl", param1s);
+        assertEquals("Expected exit code", 0, po1.getReturnCode());
+
+        File f = new File("/var/run/openliberty/defaultServer.pid");
+        assertTrue("Server pid should exist",
+                   f.exists());
+
+        String[] param2s = { "stop", "openliberty@defaultServer.service" };
+        ProgramOutput po2 = runCommand(METHOD_NAME, "systemctl", param2s);
+        assertEquals("Expected exit code", 0, po2.getReturnCode());
+        exiting(c, METHOD_NAME);
+    }
+
+    @Test
+    public void testUninstallDeb() throws Exception {
+       
+        String METHOD_NAME = "testUninstallDeb";
+        entering(c, METHOD_NAME);
+
+        String[] param1s = { "remove", "-y", "openliberty" };
+        ProgramOutput po = runCommand(METHOD_NAME, "apt-get", param1s);
+        assertEquals("Expected exit code", 0, po.getReturnCode());
+        exiting(c, METHOD_NAME);
+    }
+
     // @Test
     // public void testInstallRpm() throws Exception {
        
