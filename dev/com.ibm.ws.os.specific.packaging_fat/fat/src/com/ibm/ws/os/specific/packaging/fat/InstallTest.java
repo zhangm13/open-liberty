@@ -10,6 +10,8 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.io.File;
+
 import com.ibm.websphere.simplicity.ProgramOutput;
 import com.ibm.websphere.simplicity.log.Log;
 import com.ibm.websphere.simplicity.OperatingSystem;
