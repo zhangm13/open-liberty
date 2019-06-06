@@ -666,11 +666,20 @@ task updateBuildPackageScriptTemplate(type: Copy) {
     rename { it.replace(".template", "") }
 }
 
+task updateRulesTemplate(type: Copy) {
+    from 'packaging'
+    include 'rules.template'
+    into 'packaging/debuild/openliberty/debian'
+    filter { line -> line.replaceAll('@VERSION@', bnd('libertyServiceVersion', '19.0.0.5')) }
+    rename { it.replace(".template", "") }
+}
+
 task buildOsSpecificPackages(type:Exec) {
     dependsOn copyOpenLibertyAll
     dependsOn updateChangelogTemplate
     dependsOn updateSpecTemplate
     dependsOn updateBuildPackageScriptTemplate
+    dependsOn updateRulesTemplate
 
     // enabled isAutomatedBuild
     // enabled isRelease

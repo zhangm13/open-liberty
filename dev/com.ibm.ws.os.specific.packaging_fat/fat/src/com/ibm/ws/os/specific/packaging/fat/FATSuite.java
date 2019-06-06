@@ -21,7 +21,8 @@ import componenttest.rules.repeater.RepeatTests;
 @RunWith(Suite.class)
 @SuiteClasses({
                 SimpleTest.class,
-                InstallTest.class
+                InstallUbuntuTest.class,
+                InstallRhelTest.class
 })
 public class FATSuite {
 

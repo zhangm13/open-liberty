@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 
 import com.ibm.websphere.simplicity.ProgramOutput;
 import com.ibm.websphere.simplicity.RemoteFile;
@@ -79,6 +80,26 @@ public abstract class InstallUtilityToolTest {
             Log.info(c, METHOD_NAME, "delete " + cDir);
         }
         exiting(c, METHOD_NAME);
+    }
+
+    protected static boolean isLinuxUbuntu() throws Exception {
+        if (isLinux){
+            String content = new Scanner(new File("/etc/os-release")).useDelimiter("\\Z").next();
+            if (content.contains("ubuntu")){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected static boolean isLinuxRhel() throws Exception {
+        if (isLinux){
+            String content = new Scanner(new File("/etc/os-release")).useDelimiter("\\Z").next();
+            if (content.contains("rhel")){
+                return true;
+            }
+        }
+        return false;
     }
 
     protected ProgramOutput runCommand(String testcase, String command, String[] params) throws Exception {

@@ -120,9 +120,13 @@ if [ ! -d "/usr/share/java/openliberty" ]; then
     mv /usr/share/openliberty/clients/*.jar /usr/share/java/openliberty/clients/
     ln -sf /usr/share/java/openliberty/clients/*.jar /usr/share/openliberty/clients/
 
-    mkdir -p /usr/share/java/openliberty/dev/{api,spi}/{ibm,spec,stable,third-party}
-    mkdir -p /usr/share/java/openliberty/dev/api/{ibm,spec,stable,third-party}
-    mkdir -p /usr/share/java/openliberty/dev/spi/{ibm,spec,third-party}
+    mkdir -p /usr/share/java/openliberty/dev/api/ibm
+    mkdir -p /usr/share/java/openliberty/dev/api/spec 
+    mkdir -p /usr/share/java/openliberty/dev/api/stable
+    mkdir -p /usr/share/java/openliberty/dev/api/third-party
+    mkdir -p /usr/share/java/openliberty/dev/spi/ibm
+    mkdir -p /usr/share/java/openliberty/dev/spi/spec
+    mkdir -p /usr/share/java/openliberty/dev/spi/third-party
     mv /usr/share/openliberty/dev/spi/ibm/*.jar /usr/share/java/openliberty/dev/spi/ibm/
     ln -sf /usr/share/java/openliberty/dev/spi/ibm/*.jar /usr/share/openliberty/dev/spi/ibm/
 
