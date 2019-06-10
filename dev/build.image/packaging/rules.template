@@ -22,11 +22,11 @@ override_dh_auto_install:
 
     #Creating the scripts
     mkdir -p ${BUILDROOT}/usr/libexec
-    mv ${TOPDIR}/scripts/openliberty ${BUILDROOT}/usr/libexec
+    cp ${TOPDIR}/scripts/openliberty ${BUILDROOT}/usr/libexec
 
     #Creating the service
     mkdir -p ${BUILDROOT}/lib/systemd/system
-    mv ${TOPDIR}/scripts/openliberty@.service ${BUILDROOT}/lib/systemd/system
+    cp ${TOPDIR}/scripts/openliberty@.service ${BUILDROOT}/lib/systemd/system
 
     #Moving LICENSE file to doc and license
     mkdir -p ${BUILDROOT}/usr/share/doc/${NAME}
