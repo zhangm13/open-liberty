@@ -694,13 +694,18 @@ task buildOsSpecificPackages(type:Exec) {
     outputs.file(rpms)
     outputs.file(debs)
 
+    standardOutput = new ByteArrayOutputStream()
+    
     commandLine 'sh', './buildOsSpecificPackages.sh'
 
     ignoreExitValue true
 
+    ext.output = standardOutput.toString()
+
     doLast {
         file('packaging/tempPackagingDir').deleteDir()
         if (execResult.getExitValue() != 0) {
+            println output()
             throw new GradleException("Script buildOsSpecificPackages.sh failed to run rpmbuild and debuild.")
         }
     }
