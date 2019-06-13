@@ -6,26 +6,23 @@ BUILDROOT=${TOPDIR}/openliberty/debian/openliberty
 VERSION=@VERSION@
 
 %:
-    dh $@
+	dh $@
 
 override_dh_strip_nondeterminism:
 
 override_dh_auto_install:
-
-    #Unpacking the tar
-    mkdir -p ${BUILDROOT}/usr/share/${NAME}
-    tar -zxf ${TOPDIR}/${NAME}-${VERSION}.tar.gz -C ${BUILDROOT}/usr/share/${NAME} .
-    #Create the user share folder and copy the .zip there
-    mkdir -p ${BUILDROOT}/usr/share/${NAME}
-    cp ${TOPDIR}/defaultServer.zip ${BUILDROOT}/usr/share/${NAME}
-    
-    #Creating the scripts
-    mkdir -p ${BUILDROOT}/usr/libexec
-    cp ${TOPDIR}/scripts/openliberty ${BUILDROOT}/usr/libexec
-    
-    #Creating the service
-    mkdir -p ${BUILDROOT}/lib/systemd/system
-    cp ${TOPDIR}/scripts/openliberty@.service ${BUILDROOT}/lib/systemd/system
-    #Moving LICENSE file to doc and license
-    mkdir -p ${BUILDROOT}/usr/share/doc/${NAME}
-    mv ${BUILDROOT}/usr/share/${NAME}/LICENSE ${BUILDROOT}/usr/share/doc/${NAME}
+	#Unpacking the tar
+	mkdir -p ${BUILDROOT}/usr/share/${NAME}
+	tar -zxf ${TOPDIR}/${NAME}-${VERSION}.tar.gz -C ${BUILDROOT}/usr/share/${NAME} .
+	#Create the user share folder and copy the .zip there
+	mkdir -p ${BUILDROOT}/usr/share/${NAME}
+	cp ${TOPDIR}/defaultServer.zip ${BUILDROOT}/usr/share/${NAME}
+	#Creating the scripts
+	mkdir -p ${BUILDROOT}/usr/libexec
+	cp ${TOPDIR}/scripts/openliberty ${BUILDROOT}/usr/libexec
+	#Creating the service
+	mkdir -p ${BUILDROOT}/lib/systemd/system
+	cp ${TOPDIR}/scripts/openliberty@.service ${BUILDROOT}/lib/systemd/system
+	#Moving LICENSE file to doc and license
+	mkdir -p ${BUILDROOT}/usr/share/doc/${NAME}
+	mv ${BUILDROOT}/usr/share/${NAME}/LICENSE ${BUILDROOT}/usr/share/doc/${NAME}
