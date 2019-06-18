@@ -633,12 +633,12 @@ task gatherTestResults {
     dependsOn zipTestReport,createJSONForPublicArtifacts
 }
 
-task copyOpenLibertyAll(type: Sync) {
-   dependsOn zipOpenLibertyAll
+task copyOpenLiberty(type: Sync) {
+   dependsOn zipOpenLiberty
 
    mkdir("packaging/tempPackagingDir")
 
-   from zipOpenLibertyAll
+   from zipOpenLiberty
    into 'packaging/tempPackagingDir'
 }
 
@@ -675,7 +675,7 @@ task updateRulesTemplate(type: Copy) {
 }
 
 task buildOsSpecificPackages(type:Exec) {
-    dependsOn copyOpenLibertyAll
+    dependsOn copyOpenLiberty
     dependsOn updateChangelogTemplate
     dependsOn updateSpecTemplate
     dependsOn updateBuildPackageScriptTemplate
