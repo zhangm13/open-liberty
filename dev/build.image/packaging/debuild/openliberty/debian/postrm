@@ -4,12 +4,8 @@ set -e
 case "$1" in
     remove|upgrade)
         echo "Removing all leftover jar files"
-        if [ -d "/usr/share/openliberty/lib" ]; then
-            rm -rf /usr/share/openliberty/lib
-        fi
-        echo "Removing all symlinks for jar and class files"
-        if [ -d "/usr/share/java/openliberty" ]; then
-            rm -rf /usr/share/java/openliberty
+        if [ -d "/opt/ol/openliberty/lib" ]; then
+            rm -rf /opt/ol/openliberty/lib
         fi
         ;;
     abort-install|abort-upgrade|purge)
