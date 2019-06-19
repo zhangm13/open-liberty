@@ -15,7 +15,7 @@ Source:         %{name}-%{version}.tar.gz
 BuildArch:      noarch
 URL:            https://openliberty.io
 Packager:       IBM
-Suggests:       java >= 1:1.8.0
+#Suggests:       java >= 1:1.8.0
 
 %description
 Open Liberty provides developers with Java EE 8 technology 
