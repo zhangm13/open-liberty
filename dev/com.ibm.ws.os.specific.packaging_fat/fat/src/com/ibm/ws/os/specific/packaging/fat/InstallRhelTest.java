@@ -25,6 +25,11 @@ public class InstallRhelTest extends InstallUtilityToolTest{
     @BeforeClass
     public static void beforeClassSetup() throws Exception {
         Assume.assumeTrue(isLinuxRhel());
+        entering(c, System.getProperty("os.name").toLowerCase());
+        entering(c, System.getProperty("gsaid").toLowerCase());
+        entering(c, System.getProperty("gsapw").toLowerCase());
+        entering(c, System.getProperty("intranet.user").toLowerCase());
+        entering(c, System.getProperty("intranet.password").toLowerCase());
         //Assume.assumeTrue(ConnectedToIMRepo);
         setupEnv();
     }

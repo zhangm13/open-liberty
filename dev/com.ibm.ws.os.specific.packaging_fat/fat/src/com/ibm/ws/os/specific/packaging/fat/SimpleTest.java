@@ -10,8 +10,6 @@
  *******************************************************************************/
 package com.ibm.ws.os.specific.packaging.fat;
 
-import static componenttest.annotation.SkipForRepeat.EE8_FEATURES;
-import static componenttest.annotation.SkipForRepeat.NO_MODIFICATION;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
@@ -25,7 +23,6 @@ import com.ibm.websphere.simplicity.ShrinkHelper;
 
 import app1.web.TestServletA;
 import componenttest.annotation.Server;
-import componenttest.annotation.SkipForRepeat;
 import componenttest.annotation.TestServlet;
 import componenttest.custom.junit.runner.FATRunner;
 import componenttest.topology.impl.LibertyServer;
@@ -76,9 +73,7 @@ public class SimpleTest extends FATServletClient {
     }
 
     @Test
-    @SkipForRepeat(EE8_FEATURES)
     public void testEE7Only() throws Exception {
-        // This test will skip for the EE8 feature iteration
 
         // Verify only EE7 features are enabled
         Set<String> features = server.getServerConfiguration().getFeatureManager().getFeatures();
@@ -89,9 +84,7 @@ public class SimpleTest extends FATServletClient {
     }
 
     @Test
-    @SkipForRepeat(NO_MODIFICATION)
     public void testEE8Only() throws Exception {
-        // This test will skip for the EE7 feature (i.e. NO_MODIFICATION) iteration
 
         // Verify only EE8 features are enabled
         Set<String> features = server.getServerConfiguration().getFeatureManager().getFeatures();

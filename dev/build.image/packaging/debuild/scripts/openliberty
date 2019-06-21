@@ -3,7 +3,7 @@
 ##OBJECTIVE - used as server service script for users ##
 
 # load configuration variables
-iD=/usr/share/openliberty
+iD=/opt/ol/openliberty
 
 #set server params
 serverName=$2
