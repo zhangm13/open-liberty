@@ -35,6 +35,7 @@ public abstract class InstallUtilityToolTest {
     public static boolean isLinux = System.getProperty("os.name").toLowerCase().contains("linux");
     protected static List<String> cleanFiles;
     protected static List<String> cleanDirectories;
+    public static boolean connectedToRepo = true;
 
     /**
      * Setup the environment.
@@ -148,6 +149,98 @@ public abstract class InstallUtilityToolTest {
     protected static void assertFilesNotExist(String msg, String[] filePaths) throws Exception {
         for (String filePath : filePaths) {
             assertFalse(msg + ": " + filePath + " exists.", server.fileExistsInLibertyInstallRoot(filePath));
+        }
+    }
+
+    public static void testRepositoryConnection() {
+        try {
+            String localPath = new File(".").getCanonicalPath();
+            File massiveRepoPath = new File(localPath.endsWith("autoFVT") ? "publish/massiveRepo" : "autoFVT/publish/massiveRepo");
+            File[] repoPropsFiles = massiveRepoPath.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.toLowerCase().endsWith(".props");
+                }
+            });
+            //Randomly ordered the files, to balance the work load for the servers
+            Arrays.sort(repoPropsFiles, new Comparator<File>() {
+                @Override
+                public int compare(File f1, File f2) {
+                    return (int) Math.round(Math.random() * 10 - 5);
+                }
+            });
+
+            String userId;
+            String password;
+            String url;
+            String apiKey;
+            String softlayerUserId;
+            String softlayerPassword;
+
+            /*
+             * use existing connection to create login first, set connectedToRepo for results;
+             */
+            if (connectedRepoProperties != null) {
+                userId = connectedRepoProperties.get("userId");
+                password = connectedRepoProperties.get("password");
+                url = connectedRepoProperties.get("repository.url");
+                apiKey = connectedRepoProperties.get("apiKey");
+                softlayerUserId = connectedRepoProperties.get("softlayerUserId");
+                softlayerPassword = connectedRepoProperties.get("softlayerPassword");
+
+                RestRepositoryConnection loginInfo = new RestRepositoryConnection(userId, password, apiKey, url, softlayerUserId, softlayerPassword);
+                Log.info(TestUtils.class, "testRepositoryConnection", "Connecting to apikey = " + loginInfo.getApiKey() + " repository url = " + loginInfo.getRepositoryUrl());
+                connectedToRepo = loginInfo.isRepositoryAvailable() && isRepoEnabled(loginInfo);
+                if (connectedToRepo) {
+                    Log.info(TestUtils.class, "testRepositoryConnection", "Repository connection is OK.");
+                } else {
+                    Log.info(TestUtils.class, "testRepositoryConnection", "Cannot connect to the repository");
+                }
+            }
+
+            //fail over part
+            if (connectedRepoProperties == null || connectedToRepo == false) {
+                for (File f : repoPropsFiles) {
+                    Properties p = new Properties();
+                    p.load(new FileInputStream(f));
+
+                    // Load basic properties, set to null if blank
+                    userId = p.getProperty("userId");
+                    password = p.getProperty("password");
+                    url = p.getProperty("repository.url");
+                    apiKey = p.getProperty("apiKey");
+                    softlayerUserId = p.getProperty("softlayerUserId");
+                    softlayerPassword = p.getProperty("softlayerPassword");
+
+                    RestRepositoryConnection loginInfo = new RestRepositoryConnection(userId, password, apiKey, url, softlayerUserId, softlayerPassword);
+                    Log.info(TestUtils.class, "testRepositoryConnection",
+                             "Connecting to apikey = " + loginInfo.getApiKey() + " repository url = " + loginInfo.getRepositoryUrl());
+                    connectedToRepo = loginInfo.isRepositoryAvailable() && isRepoEnabled(loginInfo);
+                    if (connectedToRepo) {
+                        Log.info(TestUtils.class, "testRepositoryConnection", "Connected to Repository +" + url
+                                                                              + ", ApiKey = " + apiKey);
+                        repositoryDescriptionUrl = f.getCanonicalFile().toURI().toURL().toString();
+                        connectedRepoProperties = new HashMap<String, String>();
+                        connectedRepoProperties.put("userId", userId);
+                        connectedRepoProperties.put("password", password);
+                        connectedRepoProperties.put("repository.url", url);
+                        connectedRepoProperties.put("apiKey", apiKey);
+                        connectedRepoProperties.put("softlayerUserId", softlayerUserId);
+                        connectedRepoProperties.put("softlayerPassword", softlayerPassword);
+                        return;
+                    } else {
+                        Log.info(TestUtils.class, "testRepositoryConnection", "Cannot connect to the repository");
+                    }
+                    if (!connectedToRepo)
+                        Log.info(TestUtils.class, "testRepositoryConnection", "None of the Repository is conncted, " + "The Testcases will be skipped");
+                }
+            }
+
+        } catch (Exception e) {
+            Log.info(TestUtils.class, "testRepositoryConnection", "Cannot connect to the repository : " + e.getMessage());
+            connectedToRepo = false;
+        } finally {
+            MainRepository.clearCachedRepoProperties();
         }
     }
 }
