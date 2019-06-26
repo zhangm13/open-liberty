@@ -722,8 +722,8 @@ task buildOsNativePackages(type:Exec) {
     dependsOn updateBuildPackageScriptTemplate
     dependsOn updateRulesTemplate
 
-    disabled isAutomatedBuild
-    disabled isRelease
+    //enabled isAutomatedBuild
+    //enabled isRelease
     enabled isBuildOsNativePackages
 
     workingDir 'packaging'
