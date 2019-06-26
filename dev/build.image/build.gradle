@@ -722,7 +722,7 @@ task buildOsNativePackages(type:Exec) {
     dependsOn updateBuildPackageScriptTemplate
     dependsOn updateRulesTemplate
 
-    // enabled isAutomatedBuild
+    enabled isAutomatedBuild
     enabled isRelease
     disabled isBuildOsNativePackages
 
