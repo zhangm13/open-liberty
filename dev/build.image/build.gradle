@@ -722,9 +722,9 @@ task buildOsNativePackages(type:Exec) {
     dependsOn updateBuildPackageScriptTemplate
     dependsOn updateRulesTemplate
 
-    enabled isAutomatedBuild
-    enabled isRelease
-    disabled isBuildOsNativePackages
+    disabled isAutomatedBuild
+    disabled isRelease
+    enabled isBuildOsNativePackages
 
     workingDir 'packaging'
     mkdir("packaging/tempPackagingDir/tempTar")
