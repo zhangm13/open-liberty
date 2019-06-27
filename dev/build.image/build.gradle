@@ -724,7 +724,7 @@ task buildOsNativePackages(type:Exec) {
 
     //enabled isAutomatedBuild
     //enabled isRelease
-    //enabled isBuildOsNativePackages
+    enabled isBuildOsNativePackages
 
     workingDir 'packaging'
     mkdir("packaging/tempPackagingDir/tempTar")
@@ -751,3 +751,10 @@ task buildOsNativePackages(type:Exec) {
     
 }
 publish.dependsOn buildOsNativePackages
+
+task buildOsTest {
+    //enabled isBuildOsNativePackages
+    doLast {
+        println "The value of this flag is: " + isBuildOsNativePackages
+    }
+}

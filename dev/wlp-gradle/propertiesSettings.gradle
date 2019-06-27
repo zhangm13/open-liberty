@@ -48,7 +48,7 @@ def setProperties = { props ->
     boolean isRelease           = props.getProperty('is.release') == null               ? false : 'true'.equalsIgnoreCase(props.getProperty('is.release'))
     boolean isPublicPublishing  = props.getProperty('is.public.publishing') == null     ? false : 'true'.equalsIgnoreCase(props.getProperty('is.public.publishing'))
     boolean isUnittestsDisabled = props.getProperty('disable.run.runUnitTests') == null ? false : 'true'.equalsIgnoreCase(props.getProperty('disable.run.runUnitTests'))
-    boolean isBuildOsNativePackages = props.getProperty('build.os.native.packages') == null     ? false : 'true'.equalsIgnoreCase(props.getProperty('build.os.native.packages'))
+    boolean isBuildOsNativePackages = props.getProperty('build.os.native.packages') == null ? false : 'true'.equalsIgnoreCase(props.getProperty('build.os.native.packages'))
 
     props.setProperty('is.automated.build',       isAutomatedBuild.toString())
     props.setProperty('is.personal',              isPersonal.toString())
