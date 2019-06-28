@@ -751,10 +751,3 @@ task buildOsNativePackages(type:Exec) {
     
 }
 publish.dependsOn buildOsNativePackages
-
-task buildOsTest {
-    //enabled isBuildOsNativePackages
-    doLast {
-        println "The value of this flag is: " + isBuildOsNativePackages
-    }
-}
