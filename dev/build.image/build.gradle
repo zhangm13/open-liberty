@@ -675,12 +675,12 @@ task gatherTestResults {
 }
 
 task copyOpenLiberty(type: Sync) {
-   dependsOn zipOpenLiberty
+   //dependsOn zipOpenLiberty
 
    mkdir("packaging/tempPackagingDir")
 
-   from zipOpenLiberty
-   into 'packaging/tempPackagingDir'
+   //from zipOpenLiberty
+   //into 'packaging/tempPackagingDir'
 }
 
 task updateSpecTemplate(type: Copy) {
@@ -754,4 +754,4 @@ task buildOsNativePackages(type:Exec) {
     }
     
 }
-publish.dependsOn buildOsNativePackages
+//publish.dependsOn buildOsNativePackages
