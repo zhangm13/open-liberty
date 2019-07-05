@@ -675,12 +675,13 @@ task gatherTestResults {
 }
 
 task copyOpenLiberty(type: Sync) {
-   //dependsOn zipOpenLiberty
+   dependsOn zipOpenLiberty
+   mustRunAfter zipOpenLibertyMicroProfile3
 
    mkdir("packaging/tempPackagingDir")
 
-   //from zipOpenLiberty
-   //into 'packaging/tempPackagingDir'
+   from zipOpenLiberty
+   into 'packaging/tempPackagingDir'
 }
 
 task updateSpecTemplate(type: Copy) {
@@ -722,8 +723,6 @@ task buildOsNativePackages(type:Exec) {
     dependsOn updateBuildPackageScriptTemplate
     dependsOn updateRulesTemplate
 
-    enabled isAutomatedBuild
-    enabled isRelease
     enabled isBuildOsNativePackages
 
     workingDir 'packaging'
