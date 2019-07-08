@@ -674,45 +674,47 @@ task gatherTestResults {
     dependsOn zipTestReport,createJSONForPublicArtifacts
 }
 
-task copyOpenLiberty(type: Sync) {
-   dependsOn zipOpenLiberty
+if (isBuildOsNativePackages){
+    task copyOpenLiberty(type: Sync) {
+       dependsOn zipOpenLiberty
 
-   mkdir("packaging/tempPackagingDir")
+       mkdir("packaging/tempPackagingDir")
 
-   from zipOpenLiberty
-   into 'packaging/tempPackagingDir'
-}
+       from zipOpenLiberty
+       into 'packaging/tempPackagingDir'
+    }
 
-task updateSpecTemplate(type: Copy) {
-    from 'packaging'
-    include 'openliberty.spec.template'
-    into 'packaging/rpmbuild/SPECS'
-    filter { line -> line.replaceAll('@SPEC_VERSION@', bnd('libertyServiceVersion', 'Unknown')) }
-    rename { it.replace(".template", "") }
-}
+    task updateSpecTemplate(type: Copy) {
+        from 'packaging'
+        include 'openliberty.spec.template'
+        into 'packaging/rpmbuild/SPECS'
+        filter { line -> line.replaceAll('@SPEC_VERSION@', bnd('libertyServiceVersion', 'Unknown')) }
+        rename { it.replace(".template", "") }
+    }
 
-task updateChangelogTemplate(type: Copy) {
-    from 'packaging'
-    include 'changelog.template'
-    into 'packaging/debuild/openliberty/debian'
-    filter { line -> line.replaceAll('@CHANGELOG_VERSION@', bnd('libertyServiceVersion', 'Unknown')) }
-    rename { it.replace(".template", "") }
-}
+    task updateChangelogTemplate(type: Copy) {
+        from 'packaging'
+        include 'changelog.template'
+        into 'packaging/debuild/openliberty/debian'
+        filter { line -> line.replaceAll('@CHANGELOG_VERSION@', bnd('libertyServiceVersion', 'Unknown')) }
+        rename { it.replace(".template", "") }
+    }
 
-task updateBuildPackageScriptTemplate(type: Copy) {
-    from 'packaging'
-    include 'buildOsNativePackages.sh.template'
-    into 'packaging'
-    filter { line -> line.replaceAll('@DRIVER_VERSION@', bnd('libertyServiceVersion', 'Unknown')) }
-    rename { it.replace(".template", "") }
-}
+    task updateBuildPackageScriptTemplate(type: Copy) {
+        from 'packaging'
+        include 'buildOsNativePackages.sh.template'
+        into 'packaging'
+        filter { line -> line.replaceAll('@DRIVER_VERSION@', bnd('libertyServiceVersion', 'Unknown')) }
+        rename { it.replace(".template", "") }
+    }
 
-task updateRulesTemplate(type: Copy) {
-    from 'packaging'
-    include 'rules.template'
-    into 'packaging/debuild/openliberty/debian'
-    filter { line -> line.replaceAll('@VERSION@', bnd('libertyServiceVersion', 'Unknown')) }
-    rename { it.replace(".template", "") }
+    task updateRulesTemplate(type: Copy) {
+        from 'packaging'
+        include 'rules.template'
+        into 'packaging/debuild/openliberty/debian'
+        filter { line -> line.replaceAll('@VERSION@', bnd('libertyServiceVersion', 'Unknown')) }
+        rename { it.replace(".template", "") }
+    }
 }
 
 task buildOsNativePackages(type:Exec) {
