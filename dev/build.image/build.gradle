@@ -753,4 +753,4 @@ task buildOsNativePackages(type:Exec) {
     }
     
 }
-//publish.dependsOn buildOsNativePackages
+publish.dependsOn buildOsNativePackages
