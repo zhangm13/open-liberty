@@ -676,7 +676,6 @@ task gatherTestResults {
 
 task copyOpenLiberty(type: Sync) {
    dependsOn zipOpenLiberty
-   mustRunAfter zipOpenLibertyMicroProfile3
 
    mkdir("packaging/tempPackagingDir")
 
@@ -724,6 +723,8 @@ task buildOsNativePackages(type:Exec) {
     dependsOn updateRulesTemplate
 
     enabled isBuildOsNativePackages
+
+    mustRunAfter zipOpenLibertyMicroProfile3
 
     workingDir 'packaging'
     mkdir("packaging/tempPackagingDir/tempTar")
