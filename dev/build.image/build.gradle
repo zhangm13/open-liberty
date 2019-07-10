@@ -676,11 +676,8 @@ task gatherTestResults {
 
 task allPackagingZipsComplete {
     dependsOn zipOpenLiberty
-    dependsOn zipOpenLibertyMaven
     dependsOn zipOpenLibertyAll
     dependsOn zipOpenLibertyJavaee8
-    dependsOn zipOpenLibertyMicroProfile3
-    dependsOn zipOpenLibertyMicroProfile2
     dependsOn zipOpenLibertyWebProfile8
     dependsOn zipOpenLibertyKernel
 }
