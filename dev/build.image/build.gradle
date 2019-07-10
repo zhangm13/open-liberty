@@ -683,7 +683,7 @@ task allPackagingZipsComplete {
 }
 
 task copyOpenLiberty(type: Sync) {
-   dependsOn allPackagingZipsComplete
+   dependsOn ':build.image:publish'
 
    mkdir("packaging/tempPackagingDir")
 
