@@ -674,8 +674,19 @@ task gatherTestResults {
     dependsOn zipTestReport,createJSONForPublicArtifacts
 }
 
+task allPackagingZipsComplete {
+    dependsOn zipOpenLiberty
+    dependsOn zipOpenLibertyMaven
+    dependsOn zipOpenLibertyAll
+    dependsOn zipOpenLibertyJavaee8
+    dependsOn zipOpenLibertyMicroProfile3
+    dependsOn zipOpenLibertyMicroProfile2
+    dependsOn zipOpenLibertyWebProfile8
+    dependsOn zipOpenLibertyKernel
+}
+
 task copyOpenLiberty(type: Sync) {
-   dependsOn zipOpenLiberty
+   dependsOn allPackagingZipsComplete
 
    mkdir("packaging/tempPackagingDir")
 
@@ -723,8 +734,6 @@ task buildOsNativePackages(type:Exec) {
     dependsOn updateRulesTemplate
 
     enabled isBuildOsNativePackages
-
-    shouldRunAfter zipOpenLibertyMicroProfile3
 
     workingDir 'packaging'
     mkdir("packaging/tempPackagingDir/tempTar")
