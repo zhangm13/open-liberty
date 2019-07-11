@@ -683,13 +683,13 @@ task allPackagingZipsComplete {
 }
 
 task copyOpenLiberty(type: Sync) {
-   dependsOn ':build.image:publish'
 
    mkdir("packaging/tempPackagingDir")
 
    from zipOpenLiberty
    into 'packaging/tempPackagingDir'
 }
+publish.mustRunAfter copyOpenLiberty
 
 task updateSpecTemplate(type: Copy) {
     from 'packaging'
