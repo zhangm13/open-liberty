@@ -95,7 +95,7 @@ mkdir -p /var/run/openliberty
 mkdir -p /var/log/openliberty
 
 echo "Setting permissions to files/folders"
-chown -R openliberty:openliberty /opt/ol/openliberty/lib
+chown -R openliberty:openliberty /opt/ol/lib
 chown -R openliberty:openliberty /var/local/openliberty
 chmod -R u+w /var/local/openliberty
 chown -R openliberty:openliberty /var/run/openliberty
@@ -106,7 +106,7 @@ exit 0
 
 %postun
 echo "Removing all leftover jar files"
-if [ -d "/opt/ol/openliberty/lib" ]; then
-    rm -rf /opt/ol/openliberty/lib
+if [ -d "/opt/ol/lib" ]; then
+    rm -rf /opt/ol/lib
 fi
 exit 0
