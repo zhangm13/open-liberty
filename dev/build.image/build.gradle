@@ -276,6 +276,7 @@ task packageOpenLibertyMicroProfile3(type: PackageLibertyWithFeatures) {
 // Includes only kind=ga features.
 task zipOpenLiberty(type: Zip) {
     dependsOn packageOpenLiberty
+    mustRunAfter zipOpenLibertyAll
     baseName 'openliberty'
     from packageDir
     destinationDir distsDir
@@ -637,15 +638,15 @@ task copyOpenLiberty(type: Sync) {
    dependsOn zipOpenLiberty
    mkdir("packaging/tempPackagingDir")
 
-   //from zipOpenLiberty
-   from distsDir
-   include 'openliberty-*.zip'
-   exclude 'openliberty-javaee8*.zip'
-   exclude 'openliberty-all*.zip'
-   exclude 'openliberty-kernel*.zip'
-   exclude 'openliberty-microProfile*.zip'
-   exclude 'openliberty-runtime*.zip'
-   exclude 'openliberty-webProfile8*.zip'
+   from zipOpenLiberty
+   // from distsDir
+   // include 'openliberty-*.zip'
+   // exclude 'openliberty-javaee8*.zip'
+   // exclude 'openliberty-all*.zip'
+   // exclude 'openliberty-kernel*.zip'
+   // exclude 'openliberty-microProfile*.zip'
+   // exclude 'openliberty-runtime*.zip'
+   // exclude 'openliberty-webProfile8*.zip'
    into 'packaging/tempPackagingDir'
 }
 publish.dependsOn copyOpenLiberty
