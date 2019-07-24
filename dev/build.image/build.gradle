@@ -293,7 +293,6 @@ publish.dependsOn zipOpenLibertyAll
 // Includes only kind=ga features.
 task zipOpenLiberty(type: Zip) {
     dependsOn packageOpenLiberty
-    mustRunAfter zipOpenLibertyAll
     baseName 'openliberty'
     from packageDir
     destinationDir distsDir
